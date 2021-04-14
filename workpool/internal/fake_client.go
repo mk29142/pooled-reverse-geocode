@@ -6,7 +6,7 @@ import (
 
 	"github.com/mk29142/pooled-reverse-geocode/client"
 	"github.com/mk29142/pooled-reverse-geocode/domain"
-	"github.com/mk29142/pooled-reverse-geocode/task"
+	"github.com/mk29142/pooled-reverse-geocode/workpool"
 )
 
 type FakeClient struct {
@@ -115,4 +115,4 @@ func (fake *FakeClient) recordInvocation(key string, args []interface{}) {
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
-var _ task.Client = new(FakeClient)
+var _ workpool.Client = new(FakeClient)

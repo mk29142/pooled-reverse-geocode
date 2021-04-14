@@ -1,4 +1,4 @@
-package task
+package workpool
 
 import (
   "fmt"

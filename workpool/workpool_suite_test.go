@@ -1,4 +1,4 @@
-package task_test
+package workpool_test
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestTask(t *testing.T) {
+func TestWorkpool(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Task Suite")
+	RunSpecs(t, "Workpool Suite")
 }

@@ -1,18 +1,17 @@
 package workpool
 
 import (
-  "github.com/mk29142/pooled-reverse-geocode/task"
   "sync"
 )
 
 type Worker struct {
-  Tasks   chan task.Task
-  Outputs chan task.CoordinatesWithPostcode
+  Tasks   chan Task
+  Outputs chan CoordinatesWithPostcode
   Errors  chan error
 }
 
-func NewWork(tasks chan task.Task, output chan task.CoordinatesWithPostcode, errors chan error) *Worker {
-  return &Worker{
+func NewWorker(tasks chan Task, output chan CoordinatesWithPostcode, errors chan error) Worker {
+  return Worker{
     Tasks:     tasks,
     Outputs:   output,
     Errors:    errors,

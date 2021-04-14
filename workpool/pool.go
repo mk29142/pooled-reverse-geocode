@@ -1,31 +1,30 @@
 package workpool
 
 import (
-  "github.com/mk29142/pooled-reverse-geocode/task"
   "sync"
 )
 
 type Pool struct {
-  Tasks   []task.Task
+  Tasks   []Task
 
   concurrency   int
-  input         chan task.Task
-  output        chan task.CoordinatesWithPostcode
+  input         chan Task
+  output        chan CoordinatesWithPostcode
   errors        chan error
   wg            sync.WaitGroup
 }
 
-func New(tasks []task.Task, concurrency int) Pool {
+func New(tasks []Task, concurrency int) Pool {
   return Pool{
     Tasks:       tasks,
     concurrency: concurrency,
-    input:       make(chan task.Task),
-    output:      make(chan task.CoordinatesWithPostcode),
+    input:       make(chan Task),
+    output:      make(chan CoordinatesWithPostcode),
     errors:      make(chan error),
   }
 }
 
-func (p Pool) Output() <-chan task.CoordinatesWithPostcode {
+func (p Pool) Output() <-chan CoordinatesWithPostcode {
   return p.output
 }
 
@@ -35,7 +34,7 @@ func (p Pool) Errors() <-chan error {
 
 func (p Pool) Run() {
   for i := 1; i <= p.concurrency; i++ {
-    worker := NewWork(p.input, p.output, p.errors)
+    worker := NewWorker(p.input, p.output, p.errors)
     worker.Start(&p.wg)
   }
 

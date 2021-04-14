@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/mk29142/pooled-reverse-geocode/client"
 	"github.com/mk29142/pooled-reverse-geocode/domain"
-	"github.com/mk29142/pooled-reverse-geocode/task"
 	"github.com/mk29142/pooled-reverse-geocode/workpool"
 	"net/http"
 	"os"
@@ -33,12 +32,12 @@ func main() {
 
 	client := client.New(apiToken, &http.Client{})
 
-	var tasks []task.Task
+	var tasks []workpool.Task
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		var latlong domain.Coordinates
 		json.Unmarshal([]byte(scanner.Text()), &latlong)
-		tasks = append(tasks, task.NewTask(latlong, client))
+		tasks = append(tasks, workpool.NewTask(latlong, client))
 	}
 
 	pool := workpool.New(tasks, poolSize)
