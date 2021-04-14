@@ -81,7 +81,6 @@ var _ = Describe("Pool", func() {
 			  time.Sleep(time.Second*2)
 
 				pool.Run()
-				pool.Cleanup()
 
 				expect := []domain.Postcode {
 					{
@@ -136,7 +135,6 @@ var _ = Describe("Pool", func() {
 				time.Sleep(time.Second*2)
 
 				pool.Run()
-				pool.Cleanup()
 
 				Expect(res).To(BeEmpty())
 				Eventually(len(errs), "3s", "1s").Should(Equal(3))

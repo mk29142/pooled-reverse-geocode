@@ -42,13 +42,7 @@ func (p Pool) Run() {
     p.input <- p.Tasks[i]
   }
   close(p.input)
-}
 
-func (p Pool) Cleanup() {
-  go func() {
-    p.wg.Wait()
-    close(p.output)
-    close(p.errors)
-  }()
+  p.wg.Wait()
 }
 

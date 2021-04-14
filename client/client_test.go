@@ -14,7 +14,6 @@ import (
 )
 
 var _ = Describe("Client", func() {
-
 	var (
 		apiToken   string
 		clientFake *internal.FakeClient

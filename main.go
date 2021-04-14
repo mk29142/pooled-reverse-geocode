@@ -43,13 +43,15 @@ func main() {
 	pool := workpool.New(tasks, poolSize)
 
 	go func() {
-		// TODO: return as json string
 		for res := range pool.Output() {
-			fmt.Fprintln(os.Stdout, domain.Postcode{
+			postcode := domain.Postcode{
 				Latitude:  res.Lat,
 				Longitude: res.Long,
 				Postcode:  res.PostCode,
-			})
+			}
+
+			out, _ := json.Marshal(postcode)
+			fmt.Fprintln(os.Stdout, string(out))
 		}
 	}()
 
@@ -60,5 +62,4 @@ func main() {
 	}()
 
 	pool.Run()
-  pool.Cleanup()
 }
