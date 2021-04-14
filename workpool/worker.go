@@ -7,11 +7,11 @@ import (
 
 type Worker struct {
   Tasks   chan task.Task
-  Outputs chan task.Result
+  Outputs chan task.CoordinatesWithPostcode
   Errors  chan error
 }
 
-func NewWork(tasks chan task.Task, output chan task.Result, errors chan error) *Worker {
+func NewWork(tasks chan task.Task, output chan task.CoordinatesWithPostcode, errors chan error) *Worker {
   return &Worker{
     Tasks:     tasks,
     Outputs:   output,

@@ -10,7 +10,7 @@ type Pool struct {
 
   concurrency   int
   input         chan task.Task
-  output        chan task.Result
+  output        chan task.CoordinatesWithPostcode
   errors        chan error
   wg            sync.WaitGroup
 }
@@ -20,12 +20,12 @@ func New(tasks []task.Task, concurrency int) Pool {
     Tasks:       tasks,
     concurrency: concurrency,
     input:       make(chan task.Task),
-    output:      make(chan task.Result),
+    output:      make(chan task.CoordinatesWithPostcode),
     errors:      make(chan error),
   }
 }
 
-func (p Pool) Output() <-chan task.Result {
+func (p Pool) Output() <-chan task.CoordinatesWithPostcode {
   return p.output
 }
 

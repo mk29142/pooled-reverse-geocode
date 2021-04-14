@@ -10,10 +10,10 @@ import (
 )
 
 type FakeClient struct {
-	PostcodeStub        func(domain.LatLong) (client.LatLongPostcode, error)
+	PostcodeStub        func(domain.Coordinates) (client.LatLongPostcode, error)
 	postcodeMutex       sync.RWMutex
 	postcodeArgsForCall []struct {
-		arg1 domain.LatLong
+		arg1 domain.Coordinates
 	}
 	postcodeReturns struct {
 		result1 client.LatLongPostcode
@@ -27,11 +27,11 @@ type FakeClient struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeClient) Postcode(arg1 domain.LatLong) (client.LatLongPostcode, error) {
+func (fake *FakeClient) Postcode(arg1 domain.Coordinates) (client.LatLongPostcode, error) {
 	fake.postcodeMutex.Lock()
 	ret, specificReturn := fake.postcodeReturnsOnCall[len(fake.postcodeArgsForCall)]
 	fake.postcodeArgsForCall = append(fake.postcodeArgsForCall, struct {
-		arg1 domain.LatLong
+		arg1 domain.Coordinates
 	}{arg1})
 	stub := fake.PostcodeStub
 	fakeReturns := fake.postcodeReturns
@@ -52,13 +52,13 @@ func (fake *FakeClient) PostcodeCallCount() int {
 	return len(fake.postcodeArgsForCall)
 }
 
-func (fake *FakeClient) PostcodeCalls(stub func(domain.LatLong) (client.LatLongPostcode, error)) {
+func (fake *FakeClient) PostcodeCalls(stub func(domain.Coordinates) (client.LatLongPostcode, error)) {
 	fake.postcodeMutex.Lock()
 	defer fake.postcodeMutex.Unlock()
 	fake.PostcodeStub = stub
 }
 
-func (fake *FakeClient) PostcodeArgsForCall(i int) domain.LatLong {
+func (fake *FakeClient) PostcodeArgsForCall(i int) domain.Coordinates {
 	fake.postcodeMutex.RLock()
 	defer fake.postcodeMutex.RUnlock()
 	argsForCall := fake.postcodeArgsForCall[i]

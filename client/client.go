@@ -43,7 +43,7 @@ func New(apiToken string, client client) Client {
   }
 }
 
-func (c Client) Postcode(coordinates domain.LatLong) (LatLongPostcode, error) {
+func (c Client) Postcode(coordinates domain.Coordinates) (LatLongPostcode, error) {
    url := fmt.Sprintf("https://api.mapbox.com/geocoding/v5/mapbox.places/%f,%f.json?types=postcode&limit=1&access_token=%s", coordinates.Longitude, coordinates.Latitude, c.ApiToken)
 
   request, err := http.NewRequest(http.MethodGet, url, nil)

@@ -33,7 +33,7 @@ var _ = Describe("Client", func() {
 
 	Describe("Postcode", func() {
 		var (
-			input domain.LatLong
+			input domain.Coordinates
 			result client.LatLongPostcode
 			err error
 		)
@@ -44,7 +44,7 @@ var _ = Describe("Client", func() {
 
 		When("given valid coordinates", func() {
 			BeforeEach(func() {
-				input = domain.LatLong{
+				input = domain.Coordinates{
 					Latitude:  50.123,
 					Longitude: 0.4021,
 				}
@@ -94,7 +94,7 @@ var _ = Describe("Client", func() {
 
 		When("response cannot be decoded", func() {
 			BeforeEach(func() {
-				input = domain.LatLong{
+				input = domain.Coordinates{
 					Latitude:  50.123,
 					Longitude: 0.4021,
 				}
@@ -112,7 +112,7 @@ var _ = Describe("Client", func() {
 
 		When("request does not return 200", func() {
 			BeforeEach(func() {
-				input = domain.LatLong{
+				input = domain.Coordinates{
 					Latitude:  50.123,
 					Longitude: 0.4021,
 				}
@@ -132,7 +132,7 @@ var _ = Describe("Client", func() {
 
 		When("request to api fails", func() {
 			BeforeEach(func() {
-				input = domain.LatLong{
+				input = domain.Coordinates{
 					Latitude:  50.123,
 					Longitude: 0.4021,
 				}

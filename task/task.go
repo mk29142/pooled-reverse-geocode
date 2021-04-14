@@ -10,33 +10,39 @@ import (
 
 //counterfeiter:generate -o internal/fake_client.go . Client
 type Client interface {
-  Postcode(coordinates domain.LatLong) (client.LatLongPostcode, error)
+  Postcode(coordinates domain.Coordinates) (client.LatLongPostcode, error)
 }
 
 type Task struct {
-  LatLong  domain.LatLong
-  GeoCoder Client
+  Coordinates domain.Coordinates
+  GeoCoder    Client
 }
 
-type Result struct {
-  PostCode client.LatLongPostcode
+type CoordinatesWithPostcode struct {
+  Lat float64
+  Long float64
+  PostCode string
 }
 
-func NewTask(latLong domain.LatLong, geocoder Client) Task {
+func NewTask(latLong domain.Coordinates, geocoder Client) Task {
   return Task{
-    LatLong:  latLong,
-    GeoCoder: geocoder,
+    Coordinates: latLong,
+    GeoCoder:    geocoder,
   }
 }
 
-func (task Task) Process() (Result, error) {
-  res, err := task.GeoCoder.Postcode(task.LatLong)
+func (task Task) Process() (CoordinatesWithPostcode, error) {
+  res, err := task.GeoCoder.Postcode(task.Coordinates)
   if err != nil {
-    return Result{},
-    domain.NewTaskError(task.LatLong.Latitude,
-      task.LatLong.Longitude,
+    return CoordinatesWithPostcode{},
+    domain.NewTaskError(task.Coordinates.Latitude,
+      task.Coordinates.Longitude,
       fmt.Errorf("failure process task: %w", err))
     }
 
-  return Result{PostCode:res}, nil
+  return CoordinatesWithPostcode{
+    Lat:      res.Latitude,
+    Long:     res.Longitude,
+    PostCode: res.Postcode,
+  }, nil
 }

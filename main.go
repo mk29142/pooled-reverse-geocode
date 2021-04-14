@@ -36,7 +36,7 @@ func main() {
 	var tasks []task.Task
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		var latlong domain.LatLong
+		var latlong domain.Coordinates
 		json.Unmarshal([]byte(scanner.Text()), &latlong)
 		tasks = append(tasks, task.NewTask(latlong, client))
 	}
@@ -47,9 +47,9 @@ func main() {
 		// TODO: return as json string
 		for res := range pool.Output() {
 			fmt.Fprintln(os.Stdout, domain.Postcode{
-				Latitude:  res.PostCode.Latitude,
-				Longitude: res.PostCode.Longitude,
-				Postcode:  res.PostCode.Postcode,
+				Latitude:  res.Lat,
+				Longitude: res.Long,
+				Postcode:  res.PostCode,
 			})
 		}
 	}()
