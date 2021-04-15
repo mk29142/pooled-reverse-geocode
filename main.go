@@ -14,10 +14,19 @@ import (
 
 func main() {
 
-	//TODO: make only api-token mandatory
 	argLength := len(os.Args[1:])
-	if argLength < 2 {
-		fmt.Fprintln(os.Stderr, "must provide api token and pool size")
+
+	poolSize := 5
+	if argLength == 1 {
+		_, err := strconv.Atoi(os.Args[argLength])
+		if err == nil {
+			fmt.Println("must provide valid api-token")
+			os.Exit(2)
+		}
+	}
+
+	if argLength > 3 {
+		fmt.Println("can only provide 2 arguments")
 		os.Exit(2)
 	}
 

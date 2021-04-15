@@ -8,7 +8,6 @@ import (
 	"github.com/mk29142/pooled-reverse-geocode/workpool/internal"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"time"
 )
 
 var _ = Describe("Pool", func() {
@@ -28,7 +27,7 @@ var _ = Describe("Pool", func() {
 			Longitude: 0.456,
 		}
 		postcode = "SS16 5HE"
-		concurrency = 1
+		concurrency = 2
 
 		task1 := workpool.NewTask(coords, fakeClient)
 		task2 := workpool.NewTask(coords, fakeClient)
@@ -78,8 +77,6 @@ var _ = Describe("Pool", func() {
 			})
 
 			It("adds to output channel", func() {
-			  time.Sleep(time.Second*2)
-
 				pool.Run()
 
 				expect := []domain.Postcode {
@@ -100,12 +97,17 @@ var _ = Describe("Pool", func() {
 					},
 				}
 
+				length := func() int {
+					return len(res)
+				}
+
 				Expect(errs).To(BeEmpty())
-				Eventually(res, "3s", "1s").Should(Equal(expect))
+				Eventually(length, "3s", "1s").Should(Equal(3))
+				Expect(res).To(Equal(expect))
 			})
 		})
 
-		When("error", func() {
+		When("Error", func() {
 			var (
 				res []domain.Postcode
 				errs []error
@@ -131,13 +133,15 @@ var _ = Describe("Pool", func() {
 				}()
 			})
 
-			It("adds to output channel", func() {
-				time.Sleep(time.Second*2)
-
+			It("adds to error channel", func() {
 				pool.Run()
 
+				length := func() int {
+					return len(errs)
+				}
+
 				Expect(res).To(BeEmpty())
-				Eventually(len(errs), "3s", "1s").Should(Equal(3))
+				Eventually(length, "3s", "1s").Should(Equal(3))
 			})
 		})
 	})
