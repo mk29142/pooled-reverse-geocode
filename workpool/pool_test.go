@@ -43,7 +43,6 @@ var _ = Describe("Pool", func() {
 	})
 
 	Describe("Success", func() {
-
 		var (
 			pool workpool.Pool
 		)
