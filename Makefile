@@ -1,4 +1,3 @@
-.PHONY: build unit-test
 
 ginkgo := go run github.com/onsi/ginkgo/ginkgo -r --randomizeAllSpecs --failOnPending
 
