@@ -1,4 +1,4 @@
-package workpool_test
+package benchmark_test
 
 import (
 	"github.com/mk29142/pooled-reverse-geocode/client"
