@@ -1,6 +1,8 @@
 # pooled-reverse-geocode
 
-This project takes in a set of latitudes and longitudes and returns the post code
+This project takes in a set of latitudes and longitudes and returns the post code.
+It used [Mapbox](https://docs.mapbox.com/api/search/geocoding/) for looking up the postcode.
+You will need a api-token to run the program.
 
 input:
 ```json
@@ -12,15 +14,19 @@ output:
 { "lat": <float64>, "lng": <float64>, "postcode": <string> }
 ```
 
-How to run:
-
-```bash
- cat coordinates.txt | ./your-program "api token" "pool size flag" > output.txt
-```
-
 ## Setup
 ```bash
 make init
+```
+
+```bash
+make build
+```
+
+How to run:
+
+```bash
+ cat coordinates.txt | ./pooled-reverse-geocode "api token" "pool size flag" > output.txt
 ```
 
 ## Running tests
